@@ -1,5 +1,9 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 class AntdScssThemePlugin {
-  SCSS_THEME_PATH;
 
   constructor(scssThemePath) {
     AntdScssThemePlugin.SCSS_THEME_PATH = scssThemePath;
@@ -15,15 +19,9 @@ class AntdScssThemePlugin {
       // Watch the theme file for changes.
       const theme = AntdScssThemePlugin.SCSS_THEME_PATH;
       if (theme) {
-        if (
-          Array.isArray(compilation.fileDependencies)
-          && !compilation.fileDependencies.includes(theme)
-        ) {
+        if (Array.isArray(compilation.fileDependencies) && !compilation.fileDependencies.includes(theme)) {
           compilation.fileDependencies.push(theme);
-        } else if (
-          compilation.fileDependencies instanceof Set
-          && !compilation.fileDependencies.has(theme)
-        ) {
+        } else if (compilation.fileDependencies instanceof Set && !compilation.fileDependencies.has(theme)) {
           compilation.fileDependencies.add(theme);
         }
       }
@@ -51,7 +49,7 @@ class AntdScssThemePlugin {
    * @return {Object} Loader config using the wrapped loader instead of the original.
    */
   static themify(config) {
-    const { loader, options = {} } = (typeof config === 'string') ? { loader: config } : config;
+    const { loader, options = {} } = typeof config === 'string' ? { loader: config } : config;
     let overloadedLoader;
     switch (loader) {
       case 'sass-loader':
@@ -67,10 +65,10 @@ class AntdScssThemePlugin {
 
     return {
       loader: overloadedLoader,
-      options,
+      options
     };
   }
 }
 
-
-export default AntdScssThemePlugin;
+exports.default = AntdScssThemePlugin;
+module.exports = exports['default'];

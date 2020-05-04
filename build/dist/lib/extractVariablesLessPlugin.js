@@ -1,3 +1,8 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 /**
  * A less plugin that extracts variables computed during the compilation of a less file.
  * This is a modified version of the plugin available at [1].
@@ -5,7 +10,6 @@
  * [1]: https://github.com/Craga89/less-plugin-variables-output
  */
 const SELECTOR = '__VARIABLES__';
-
 
 class PostProcessor {
   constructor(less, callback) {
@@ -36,7 +40,6 @@ class PostProcessor {
   }
 }
 
-
 class Visitor {
   constructor(less) {
     this.less = less;
@@ -49,9 +52,7 @@ class Visitor {
     //   var-name: @var-name;
     // }
     const variables = root.variables();
-    const rules = Object.keys(variables).map(variable => (
-      `${variable.slice(1)}: ${variable};`
-    ));
+    const rules = Object.keys(variables).map(variable => `${variable.slice(1)}: ${variable};`);
     const selector = `${SELECTOR}{${rules.join('\n')}}`;
 
     // Add the fake selector to less.
@@ -61,11 +62,10 @@ class Visitor {
   }
 }
 
-
 class ExtractVariablesPlugin {
   constructor(options) {
     this.minVersion = [2, 0, 0];
-    if (!options.callback || (typeof options.callback !== 'function')) {
+    if (!options.callback || typeof options.callback !== 'function') {
       throw new Error('Must supply a callback function that receives the parsed variables.');
     }
     this.callback = options.callback;
@@ -77,5 +77,5 @@ class ExtractVariablesPlugin {
   }
 }
 
-
-export default ExtractVariablesPlugin;
+exports.default = ExtractVariablesPlugin;
+module.exports = exports['default'];
